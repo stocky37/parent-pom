@@ -10,6 +10,8 @@ Sets up the following:
   * [maven-javadoc-plugin](http://maven.apache.org/plugins/maven-javadoc-plugin/)
   * [maven-source-plugin](http://maven.apache.org/plugins/maven-source-plugin/)
   * [nexus-staging-maven-plugin](https://github.com/sonatype/nexus-maven-plugins/tree/master/staging/maven-plugin)
+* Other plugins
+  * [sortpom-maven-plugin](https://github.com/Ekryd/sortpom)
   
 To perform a release run the following:
 ```bash
