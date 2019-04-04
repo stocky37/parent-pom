@@ -5,7 +5,7 @@
 
 	<groupId>dev.stocky37</groupId>
 	<artifactId>parent</artifactId>
-	<version>0.1.0</version>
+	<version>0.1.1-SNAPSHOT</version>
 
 	<name>stocky37-parent-pom</name>
 	<url>https://github.com/stocky37/parent-pom</url>
@@ -36,7 +36,7 @@
 	<scm>
 		<url>https://github.com/stocky37/parent-pom</url>
 		<developerConnection>scm:git:git@github.com:stocky37/parent-pom.git</developerConnection>
-	  <tag>v0.1.0</tag>
+	  <tag>HEAD</tag>
   </scm>
 
 	<build>
