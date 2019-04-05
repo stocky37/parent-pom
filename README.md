@@ -2,6 +2,7 @@
 Parent POM for stocky37 OSS java projects
 
 Sets up the following:
+
 * Default developer section
 * Default MIT licence
 * Plugins for deploying to [OSSRH](https://oss.sonatype.org/)
@@ -14,6 +15,7 @@ Sets up the following:
   * [sortpom-maven-plugin](https://github.com/Ekryd/sortpom)
   
 To perform a release run the following:
+
 ```bash
 mvn release:prepare release:perform
 ```
@@ -21,8 +23,21 @@ mvn release:prepare release:perform
 This will build and sign the jar (along with source & javadoc jars), deploy it to the OSSRH staging repository, and
 then assuming all the checks pass, promote the release and close the staging repository.
 
+## Release Profiles
+
+Some optional release profiles have been included which can help define the `developmentVersion` during a release.
+These profiles help you bump the major version, minor version and patch version (assuming semver). A minor version bump
+is the default option. 
+
+If you wish to use one of these profiles just add it to the `releaseProfiles` parameter of the release plugin.
+```
+mvn release:prepare release:perform -DreleaseProfiles=release,[major|minor|patch]
+```
+
 ## Maven settings
+
 ### OSSRH Access
+
 ```xml
 <server>
   <id>ossrh</id>
@@ -30,15 +45,20 @@ then assuming all the checks pass, promote the release and close the staging rep
   <password>${ossrhPassword}</password>
 </server>
 ```
+
 ### GPG Passphrase
+
 ```xml
 <server>
   <id>gpg.passphrase</id>
   <passphrase>${gpgPassphrase}</passphrase>
 </server>
 ```
+
 ### Customise GPG Executable
+
 Only do this if necessary
+
 ```xml
 <profiles>
   <profile>

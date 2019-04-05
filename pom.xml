@@ -34,14 +34,6 @@
 						<createBackupFile>false</createBackupFile>
 						<nrOfIndentSpace>-1</nrOfIndentSpace>
 					</configuration>
-					<executions>
-						<execution>
-							<goals>
-								<goal>sort</goal>
-							</goals>
-							<phase>verify</phase>
-						</execution>
-					</executions>
 				</plugin>
 
 				<plugin>
@@ -89,7 +81,19 @@
 						<releaseProfiles>release</releaseProfiles>
 						<goals>deploy</goals>
 						<tagNameFormat>v@{project.version}</tagNameFormat>
+						<!-- be careful with this, sortpom:sort will remove the hard coded space -->
+						<scmCommentPrefix>[release][ci skip]&#160;</scmCommentPrefix>
+						<providerImplementations>
+							<git>jgit</git>
+						</providerImplementations>
 					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>org.apache.maven.scm</groupId>
+							<artifactId>maven-scm-provider-jgit</artifactId>
+							<version>1.11.2</version>
+						</dependency>
+					</dependencies>
 				</plugin>
 
 				<plugin>
@@ -104,6 +108,15 @@
 							</goals>
 						</execution>
 					</executions>
+				</plugin>
+
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>3.0.0</version>
+					<configuration>
+						<propertyPrefix>v</propertyPrefix>
+					</configuration>
 				</plugin>
 
 				<plugin>
@@ -124,14 +137,6 @@
 			<plugin>
 				<groupId>com.github.ekryd.sortpom</groupId>
 				<artifactId>sortpom-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.sonatype.plugins</groupId>
-				<artifactId>nexus-staging-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
 	</build>
@@ -156,7 +161,7 @@
 	</developers>
 
 	<scm>
-		<developerConnection>scm:git:git@github.com:stocky37/parent-pom.git</developerConnection>
+		<developerConnection>scm:git:https://github.com/stocky37/parent-pom.git</developerConnection>
 		<url>https://github.com/stocky37/parent-pom</url>
 		<tag>HEAD</tag>
 	</scm>
@@ -201,6 +206,27 @@
 					</plugin>
 				</plugins>
 			</build>
+		</profile>
+
+		<profile>
+			<id>major</id>
+			<properties>
+				<developmentVersion>${v.nextMajorVersion}.${v.nextMinorVersion}.0-SNAPSHOT</developmentVersion>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>minor</id>
+			<properties>
+				<developmentVersion>${v.majorVersion}.${v.nextMinorVersion}.0-SNAPSHOT</developmentVersion>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>patch</id>
+			<properties>
+				<developmentVersion>${v.nextMajorVersion}.${v.minorVersion}.${v.nextIncrementalVersion}-SNAPSHOT</developmentVersion>
+			</properties>
 		</profile>
 	</profiles>
 </project>
