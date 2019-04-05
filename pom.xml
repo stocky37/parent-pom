@@ -89,7 +89,19 @@
 						<releaseProfiles>release</releaseProfiles>
 						<goals>deploy</goals>
 						<tagNameFormat>v@{project.version}</tagNameFormat>
+						<!-- be careful with this, sortpom:sort will remove the hard coded space -->
+						<scmCommentPrefix>[release][ci skip]&#160;</scmCommentPrefix>
+						<providerImplementations>
+							<git>jgit</git>
+						</providerImplementations>
 					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>org.apache.maven.scm</groupId>
+							<artifactId>maven-scm-provider-jgit</artifactId>
+							<version>1.11.2</version>
+						</dependency>
+					</dependencies>
 				</plugin>
 
 				<plugin>
@@ -134,10 +146,6 @@
 				<groupId>com.github.ekryd.sortpom</groupId>
 				<artifactId>sortpom-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-			</plugin>
 		</plugins>
 	</build>
 
@@ -161,7 +169,7 @@
 	</developers>
 
 	<scm>
-		<developerConnection>scm:git:git@github.com:stocky37/parent-pom.git</developerConnection>
+		<developerConnection>scm:git:https://github.com/stocky37/parent-pom.git</developerConnection>
 		<url>https://github.com/stocky37/parent-pom</url>
 		<tag>HEAD</tag>
 	</scm>

@@ -1,0 +1,15 @@
+language: java
+before_deploy:
+  - .ci/gpg-setup.sh
+  - .ci/git-setup.sh
+deploy:
+  - provider: script
+    script: .ci/deploy.sh
+    on:
+      all_branches: true
+      condition: $TRAVIS_BRANCH != master
+  - provider: script
+    script: .ci/release.sh
+    on:
+      branch: master
+      condition: $TRAVIS_PULL_REQUEST = false
